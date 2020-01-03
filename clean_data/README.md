@@ -1,7 +1,7 @@
 Mass Clean Data
 -------------------------------------------------
 
-Odoo Version : Odoo 12.0 Community
+Odoo Version : Odoo 13.0 Community
 
 
 Installation 

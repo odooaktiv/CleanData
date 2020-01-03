@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Mass Clean Data (Clear Data)",
+    'name': "Mass Clean/Remove/Delete Data (Bulk Data/Records Cleaner)",
     'summary': 'This module allows user to clean records from object using wizard',
     'author': "AktivSoftware",
     'website': "http://www.aktivsoftware.com",
     'category': 'Tools',
-    'version': '12.0.0.0.0',
+    'version': '13.0.0.0.0',
     'license': 'AGPL-3',
 
     # any module necessary for this one to work correctly
