@@ -28,7 +28,6 @@
     <record id="action_clean_data_wizard" model="ir.actions.act_window">
         <field name="name">Clean Data</field>
         <field name="res_model">clean.data</field>
-        <field name="view_type">form</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
