@@ -2,7 +2,7 @@
 {
     'name': "Mass Clean Data (Clear Data)",
     'summary': 'This module allows user to clean records from object using wizard',
-    'author': "AktivSoftware",
+    'author': "Aktiv Software",
     'website': "http://www.aktivsoftware.com",
     'category': 'Tools',
     'version': '12.0.0.0.0',
@@ -15,7 +15,7 @@
     'data': [
         'wizards/clean_data_view.xml',
     ],
-    # 'images': ['static/description/banner.png'],
+    'images': ['static/description/banner.png'],
     'installable': True,
     'auto_install': False,
 }
