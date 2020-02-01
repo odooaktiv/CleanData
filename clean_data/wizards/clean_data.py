@@ -17,66 +17,78 @@ class CleanData(models.TransientModel):
     pos = fields.Boolean('Point Of Sale')
     all_data = fields.Boolean('All Data')
     mrp = fields.Boolean('Manufacturing')
-
+    
+    def check_and_delete(self,table):
+        sql = """SELECT EXISTS (
+        SELECT 1 FROM information_schema.tables 
+        WHERE table_schema = 'public' 
+        AND   table_name = '%s');""" % table
+        self._cr.execute(sql)
+        res = self._cr.dictfetchall()
+        res = res and res[0] or {}
+        if res.get('exists', False):
+            sql = """delete from %s ;""" % table
+            self._cr.execute(sql)
+            
     def _clear_so_order(self):
-        sq = "delete from stock_quant"
-        sml = "delete from stock_move_line"
-        sm = "delete from stock_move"
-        sp = "delete from stock_picking"
-        apr = "delete from account_partial_reconcile"
-        aml = "delete from account_move_line"
-        am = "delete from account_move"
-        sol = "delete from sale_order_line"
-        so = "delete from sale_order"
-        self._cr.execute(sq)
-        self._cr.execute(sml)
-        self._cr.execute(sm)
-        self._cr.execute(sp)
-        self._cr.execute(apr)
-        self._cr.execute(aml)
-        self._cr.execute(am)
-        self._cr.execute(sol)
-        self._cr.execute(so)
+        sq = "stock_quant"
+        sml = "stock_move_line"
+        sm = "stock_move"
+        sp = "stock_picking"
+        apr = "account_partial_reconcile"
+        aml = "account_move_line"
+        am = "account_move"
+        sol = "sale_order_line"
+        so = "sale_order"
+        self.check_and_delete(sq)
+        self.check_and_delete(sml)
+        self.check_and_delete(sm)
+        self.check_and_delete(sp)
+        self.check_and_delete(apr)
+        self.check_and_delete(aml)
+        self.check_and_delete(am)
+        self.check_and_delete(sol)
+        self.check_and_delete(so)
 
     def _clear_po(self):
-        sq = "delete from stock_quant"
-        sml = "delete from stock_move_line"
-        sm = "delete from stock_move"
-        sp = "delete from stock_picking"
-        apr = "delete from account_partial_reconcile"
-        aml = "delete from account_move_line"
-        am = "delete from account_move"
-        po = 'delete from purchase_order'
-        pol = 'delete from purchase_order_line'
-        self._cr.execute(sq)
-        self._cr.execute(sml)
-        self._cr.execute(sm)
-        self._cr.execute(sp)
-        self._cr.execute(apr)
-        self._cr.execute(aml)
-        self._cr.execute(am)
-        self._cr.execute(pol)
-        self._cr.execute(po)
+        sq = "stock_quant"
+        sml = "stock_move_line"
+        sm = "stock_move"
+        sp = "stock_picking"
+        apr = "account_partial_reconcile"
+        aml = "account_move_line"
+        am = "account_move"
+        po = 'purchase_order'
+        pol = 'purchase_order_line'
+        self.check_and_delete(sq)
+        self.check_and_delete(sml)
+        self.check_and_delete(sm)
+        self.check_and_delete(sp)
+        self.check_and_delete(apr)
+        self.check_and_delete(aml)
+        self.check_and_delete(am)
+        self.check_and_delete(pol)
+        self.check_and_delete(po)
 
     def _clear_transfer(self):
-        sp = "delete from stock_picking"
-        sml = "delete from stock_move_line"
-        sm = "delete from stock_move"
-        sq = "delete from stock_quant"
-        self._cr.execute(sq)
-        self._cr.execute(sml)
-        self._cr.execute(sm)
-        self._cr.execute(sp)
+        sp = "stock_picking"
+        sml = "stock_move_line"
+        sm = "stock_move"
+        sq = "stock_quant"
+        self.check_and_delete(sq)
+        self.check_and_delete(sml)
+        self.check_and_delete(sm)
+        self.check_and_delete(sp)
 
     def _clear_inv_pymt(self):
-        apr = "delete from account_partial_reconcile"
-        aml = "delete from account_move_line"
-        am = "delete from account_move"
-        ap = "delete from account_payment"
-        self._cr.execute(apr)
-        self._cr.execute(aml)
-        self._cr.execute(am)
-        self._cr.execute(ap)
+        apr = "account_partial_reconcile"
+        aml = "account_move_line"
+        am = "account_move"
+        ap = "account_payment"
+        self.check_and_delete(apr)
+        self.check_and_delete(aml)
+        self.check_and_delete(am)
+        self.check_and_delete(ap)
 
     def _clear_cus_ven(self):
         rp = "delete from res_partner where id not in (select partner_id from res_users union select " \
@@ -84,19 +96,25 @@ class CleanData(models.TransientModel):
         self._cr.execute(rp)
 
     def _clear_coa(self):
-        at = "delete from account_tax"
-        absl = "delete from account_bank_statement_line"
-        abs = "delete from account_bank_statement"
-        ppm = "delete from pos_payment_method"
-        aj = "delete from account_journal"
-        coa = "delete from account_account"
-        self._cr.execute(at)
-        self._cr.execute(absl)
-        self._cr.execute(abs)
-        self._cr.execute(ppm)
-        self._cr.execute(aj)
-        self._cr.execute(coa)
+        at = "account_tax"
+        absl = "account_bank_statement_line"
+        abs = "account_bank_statement"
+        ppm = "pos_payment_method"
+        aj = "account_journal"
+        coa = "account_account"
+        self.check_and_delete(at)
+        self.check_and_delete(absl)
+        self.check_and_delete(abs)
+        self.check_and_delete(ppm)
+        self.check_and_delete(aj)
+        self.check_and_delete(coa)
 
+    def _clear_journal(self):
+        aml = "account_move_line"
+        am = "account_move"
+        self.check_and_delete(aml)
+        self.check_and_delete(am)
+        
     @api.onchange('all_data')
     def all_true(self):
         for rec in self:

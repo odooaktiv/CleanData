@@ -6,11 +6,11 @@
     'website': "http://www.aktivsoftware.com",
     'description': "User can easily clean the data",
     'category': 'Tools',
-    'version': '13.0.0.0.0',
+    'version': '13.0.0.0.1',
     'license': 'AGPL-3',
 
     # any module necessary for this one to work correctly
-    'depends': ['sale_management', 'stock', 'account', 'purchase'],
+    'depends': ['base'],
 
     # always loaded
     'data': [

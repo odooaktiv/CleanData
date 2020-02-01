@@ -13,3 +13,7 @@ Overview
 -------------------------------------------------------------
 * Settings > Clean Data > Clean Data.
 * This module will allows users clear multiple objects records from the wizard.
+
+13.0.0.0.1
+-------------------------------------------------------------
+-Improve code and resolve dependency's issue.
