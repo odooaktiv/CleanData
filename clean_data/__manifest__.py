@@ -7,7 +7,8 @@
     'category': 'Tools',
     'version': '12.0.0.0.0',
     'license': 'AGPL-3',
-
+    'price': 7.00,
+    'currency': "EUR",
     # any module necessary for this one to work correctly
     'depends': ['sale_management', 'stock', 'account', 'purchase'],
 
